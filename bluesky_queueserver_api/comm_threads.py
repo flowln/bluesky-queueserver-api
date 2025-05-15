@@ -86,7 +86,9 @@ class ReManagerComm_HTTP_Threads(ReManagerAPI_HTTP_Base):
             client_response = None
             request_method, endpoint, params = self._prepare_request(method=method, params=params)
             headers = headers or self._prepare_headers()
-            kwargs = {"json": params}
+            kwargs = {}
+            if request_method == "GET" and len(params) > 0:
+                kwargs.update({"json": params})
             if url_params:
                 kwargs.update({"params": url_params})
             if headers:
